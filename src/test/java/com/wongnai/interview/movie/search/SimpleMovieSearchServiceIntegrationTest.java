@@ -54,7 +54,7 @@ public class SimpleMovieSearchServiceIntegrationTest {
 
 	@Test
 	public void testMultiWordMustNotMatch() {
-		List<Movie> result = searchService.search("Glorio Lady");
+		List<Movie> result = searchService.search("Glorious Lady");
 
 		Assert.assertThat(result.size(), Matchers.equalTo(0));
 	}
