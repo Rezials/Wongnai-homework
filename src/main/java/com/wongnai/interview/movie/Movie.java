@@ -1,5 +1,7 @@
 package com.wongnai.interview.movie;
 
+import com.wongnai.interview.movie.external.MovieData;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,11 @@ public class Movie {
 
 	public Movie(String name) {
 		this.name = name;
+	}
+
+	public Movie(MovieData movieData){
+		this.name = movieData.getTitle();
+		this.actors = movieData.getCast();
 	}
 
 	public Long getId() {
