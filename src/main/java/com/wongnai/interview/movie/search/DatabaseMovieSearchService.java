@@ -2,6 +2,7 @@ package com.wongnai.interview.movie.search;
 
 import java.util.List;
 
+import com.wongnai.interview.movie.sync.MovieDataSynchronizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ public class DatabaseMovieSearchService implements MovieSearchService {
 		// This database search method must use only MovieRepository.findByNameContains(String), you also have to implement
 		// MovieDataSynchronizer.forceSync() to load all movie data, using MovieDataService, into MovieRepository.
 		// Do not change @Component annotation on this class
-		return movieRepository.findByNameContains(queryText);
+		System.out.println(queryText);
+		return movieRepository.findByNameContains(queryText.toLowerCase());
 	}
 }
