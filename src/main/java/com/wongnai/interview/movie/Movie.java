@@ -1,9 +1,11 @@
 package com.wongnai.interview.movie;
 
 import com.wongnai.interview.movie.external.MovieData;
+import org.mockito.internal.matchers.InstanceOf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -52,5 +54,20 @@ public class Movie {
 
 	public List<String> getActors() {
 		return actors;
+	}
+
+	@Override
+	public int hashCode(){
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object comparingObject){
+		if(this == comparingObject) return true;
+		else if(comparingObject instanceof Movie){
+			Movie comparingMovie = (Movie) comparingObject;
+			return Objects.equals(this.id, comparingMovie.id);
+		}
+    else return false;
 	}
 }

@@ -3,6 +3,7 @@ package com.wongnai.interview.movie;
 import java.util.List;
 
 import com.wongnai.interview.movie.search.DatabaseMovieSearchService;
+import com.wongnai.interview.movie.search.InvertedIndexMovieSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +26,8 @@ public class MoviesController {
 	 * </pre>
 	 */
 	@Autowired
-	@Qualifier("databaseMovieSearchService")
-	private DatabaseMovieSearchService databaseMovieSearchService;
+	@Qualifier("invertedIndexMovieSearchService")
+	private InvertedIndexMovieSearchService invertedIndexMovieSearchService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String helloWorld() {
@@ -35,6 +36,6 @@ public class MoviesController {
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public List<Movie> searchTitleWithKeyword(@RequestParam("q") String keyword) {
-		return databaseMovieSearchService.search(keyword);
+		return invertedIndexMovieSearchService.search(keyword);
 	}
 }
