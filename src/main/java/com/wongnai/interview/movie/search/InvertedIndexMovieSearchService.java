@@ -36,21 +36,15 @@ public class InvertedIndexMovieSearchService implements MovieSearchService {
 		// from inverted index for Star and for War so that you get movie ids 1,5,8 for Star and 2,5 for War. The result that
 		// you have to return can be union or intersection of those 2 sets of ids.
 		// By the way, in this assignment, you must use intersection so that it left for just movie id 5.
-		String[] queryArray = queryText.split(" ");
+		String[] queryArray = queryText.toLowerCase().split(" ");
 		List<Movie> firstList = invertedIndex.get(queryArray[0]);
 		if(firstList == null ){
-			firstList = movieRepository.findByNameContains(queryArray[0]);
-			invertedIndex.put(queryArray[0], firstList);
+			return new ArrayList<Movie>();
 		}
 		List<Movie> baseList = new ArrayList<Movie>(firstList);
-		System.out.println(queryArray[0]+" " +baseList.size());
 		for(int index = 1 ; index < queryArray.length ; index++){
 			String key = queryArray[index];
 			List<Movie> movieList = invertedIndex.get(key);
-			if(movieList == null ){
-				movieList = movieRepository.findByNameContains(key);
-				invertedIndex.put(key, movieList);
-			}
 			baseList.retainAll(new HashSet(movieList));
 		}
 		return baseList;
