@@ -21,6 +21,7 @@ public class MovieConfiguration {
 		return restTemplate;
 	}
 
+	// Method to return converter for receiving plain text response instead of json format response
 	private List<HttpMessageConverter<?>> getMessageConverters(){
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();

@@ -21,12 +21,11 @@ public class SimpleMovieSearchService implements MovieSearchService {
 
 	@Override
 	public List<Movie> search(String queryText) {
-		//TODO: Step 2 => Implement this method by using data from MovieDataService
-		// All test in SimpleMovieSearchServiceIntegrationTest must pass.
-		// Please do not change @Component annotation on this class
 		MoviesResponse moviesResponse = movieDataService.fetchAll();
+		// Initialize empty list for storing movies that match with query
 		List<Movie> movies = new ArrayList<Movie>();
 		for(MovieData movieData: moviesResponse){
+			// Call method to check match with query then add movie to prepared list
 			if(isContain(movieData.getTitle(), queryText)){
 				movies.add(new Movie(movieData));
 			}
@@ -35,7 +34,9 @@ public class SimpleMovieSearchService implements MovieSearchService {
 	}
 
 	private boolean isContain(String title, String query){
+		// Return false for full movie name and multiple word query
 		if(title.equalsIgnoreCase(query) || query.trim().contains(" ")) return false;
+		// Add word boundaries regex to prevent matching with partial word
 		String regex = "\\b"+query+"\\b";
 		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 		Matcher m = pattern.matcher(title);

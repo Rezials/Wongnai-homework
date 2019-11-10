@@ -52,6 +52,7 @@ public class Movie {
 		return actors;
 	}
 
+	// Overriding comparing method and hashCode for retainAll() when comparing movie list
 	@Override
 	public int hashCode(){
 		return Objects.hash(id);

@@ -20,31 +20,20 @@ public class InvertedIndexMovieSearchService implements MovieSearchService {
 
 	@Override
 	public List<Movie> search(String queryText) {
-		//TODO: Step 4 => Please implement in-memory inverted index to search movie by keyword.
-		// You must find a way to build inverted index before you do an actual search.
-		// Inverted index would looks like this:
-		// -------------------------------
-		// |  Term      | Movie Ids      |
-		// -------------------------------
-		// |  Star      |  5, 8, 1       |
-		// |  War       |  5, 2          |
-		// |  Trek      |  1, 8          |
-		// -------------------------------
-		// When you search with keyword "Star", you will know immediately, by looking at Term column, and see that
-		// there are 3 movie ids contains this word -- 1,5,8. Then, you can use these ids to find full movie object from repository.
-		// Another case is when you find with keyword "Star War", there are 2 terms, Star and War, then you lookup
-		// from inverted index for Star and for War so that you get movie ids 1,5,8 for Star and 2,5 for War. The result that
-		// you have to return can be union or intersection of those 2 sets of ids.
-		// By the way, in this assignment, you must use intersection so that it left for just movie id 5.
+
+		// Split queryText into words
 		String[] queryArray = queryText.toLowerCase().split(" ");
+		// Get movie list containing the first word
 		List<Movie> firstList = invertedIndex.get(queryArray[0]);
+		// If movie list is empty then there're no movie containing such word or it's a partial word, return empty list
 		if(firstList == null ){
 			return new ArrayList<Movie>();
 		}
+		// Prepare another list identical to the movie list to prevent removing movie from the list in inverted index
 		List<Movie> baseList = new ArrayList<Movie>(firstList);
 		for(int index = 1 ; index < queryArray.length ; index++){
-			String key = queryArray[index];
-			List<Movie> movieList = invertedIndex.get(key);
+			List<Movie> movieList = invertedIndex.get(queryArray[index]);
+			// Remove movie from base list that doesn't exist in the new list of this iteration & use HashSet because it's faster(?).
 			baseList.retainAll(new HashSet(movieList));
 		}
 		return baseList;
